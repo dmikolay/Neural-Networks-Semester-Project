@@ -1,4 +1,5 @@
 Danny Mikolay
+
 Neural Networks Semester Project
 
 # Part 1: Conceptual Design
