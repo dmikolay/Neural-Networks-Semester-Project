@@ -3,6 +3,7 @@ Danny Mikolay
 Neural Networks Semester Project
 
 # Part 1: Conceptual Design
+
 ### Introduction
 The face recognition project aims to develop a neural network-based solution to extract facial features for use as biometric templates. These features will then be compared using metrics like Euclidean or cosine distance to determine whether two faces belong to the same person or different individuals. While face detection will be handled by existing packages (most likely MediaPipe), the feature extractor will be custom-built. The final objective is to recognize a specific face among a small set of other faces, including friends residing in Carroll Hall, with the option to implement real-time processing of webcam streams.
 
@@ -40,7 +41,9 @@ For effective training, validation, and testing of the face recognition model, t
 
 ### Conclusion
 In summary, the face recognition project involves developing a custom neural network for feature extraction from facial images, training it using diverse datasets, including images of friends living in Carroll Hall, and evaluating its performance on unseen data. By integrating images of friends into the dataset, the recognition system becomes more personalized and relevant to the project's context. Through this high-level solution, I aim to build an accurate and robust face recognition system capable of identifying individuals, including friends, in real-time scenarios.
+
 # Part 2: Data Acquisition and Curation/Preprocessing
+
 ### The Collected Dataset
 Feel free to look in the datasets folder in this repo to look at the images that I’ve downloaded and plan to use. They come from three main sources:
 
