@@ -31,7 +31,7 @@ def resize_images_in_directory(input_dir, output_dir, target_size=(196, 196)):
         if os.path.isdir(item_path):
             # If item is a directory, recursively call resize_images_in_directory
             resize_images_in_directory(item_path, output_item_path, target_size)
-        elif item.endswith(('.jpg', '.jpeg', '.png', '.gif')):
+        elif item.endswith(('.JPG', '.jpg', '.jpeg', '.png', '.gif')):
             # If item is an image file
             # Open image file
             img = cv2.imread(item_path)
