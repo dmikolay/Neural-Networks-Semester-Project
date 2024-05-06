@@ -8,7 +8,7 @@ import os
 import cv2
 import argparse
 
-def resize_images_in_directory(input_dir, output_dir, target_size=(196, 196)):
+def resize_images_in_directory(input_dir, output_dir, target_size=(128, 128)):
     '''
     Resize all images in the input directory to the target size and save them in the output directory.
 
@@ -51,8 +51,17 @@ def resize_images_in_directory(input_dir, output_dir, target_size=(196, 196)):
             # Resize image
             resized_img = cv2.resize(img, (new_width, new_height), interpolation=cv2.INTER_AREA)
 
+            # Normalize image
+            normalized_img = cv2.normalize(resized_img, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
+
+            # Convert image to grayscale
+            gray_img = cv2.cvtColor(normalized_img, cv2.COLOR_BGR2GRAY)
+
+            # Perform histogram equalization
+            equalized_img = cv2.equalizeHist(gray_img)
+
             # Save resized image
-            cv2.imwrite(output_item_path, resized_img)
+            cv2.imwrite(output_item_path, equalized_img)
 
             print(f"Resized {item} and saved as {output_item_path}")
 
@@ -62,8 +71,8 @@ def main():
     parser = argparse.ArgumentParser(description="Resize images in a directory.")
     parser.add_argument("input_dir", type=str, help="Path to the input directory containing images.")
     parser.add_argument("output_dir", type=str, help="Path to the output directory where resized images will be saved.")
-    parser.add_argument("--width", type=int, default=196, help="Width of the resized images. Default is 200.")
-    parser.add_argument("--height", type=int, default=196, help="Height of the resized images. Default is 200.")
+    parser.add_argument("--width", type=int, default=128, help="Width of the resized images. Default is 200.")
+    parser.add_argument("--height", type=int, default=128, help="Height of the resized images. Default is 200.")
     args = parser.parse_args()
 
     # Call resize_images_in_directory to process images
