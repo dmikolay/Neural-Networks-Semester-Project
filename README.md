@@ -77,7 +77,50 @@ After deciding on my training set, I had a friend take 20 images of my face unde
 - **Testing**: I plan to retrieve the testing dataset from real time processing of a webcam stream. It should also be able to recognize images being fed into it, but the real time webcam stream is the goal.
 
 # Part 3: The First Solution With Results on Known Data
-TBD
+
+### Data Preprocessing
+
+Before delving into the neural network architecture that I initially built for my facial recognition program, it's crucial to understand the preprocessing steps undertaken to prepare the data for facial recognition. I created a program to take in a directory containing several other directories with various images of the same person and perform several transformations on them (see process.py). It is crucial to pass in a directory containing other folders named according to the data kept in them. For example, directories in the training and validation datasets are labeled “danny” and contain images of me, while others are labeled 1 through 100 or 150 and contain images of person 1, 2, 3, etc. Every image undergoes several transformations to enhance their suitability for my specific CNN based facial recognition.
+
+1. **Face Detection**: I start by using Google MediaPipe to detect faces within the images. This technology employs a deep learning-based approach to accurately identify facial regions. Once a face is detected, the background surrounding the face is cropped out, ensuring that only the facial region remains in the image. This step is vital as it eliminates irrelevant background information, focusing solely on the facial features necessary for recognition.
+
+2. **Resizing**: Following face cropping, the images are resized to a consistent size of 128x128 pixels (while keeping the same aspect ratio). I chose this as it is small enough to reduce the computational burden on the network (especially when using a CNN), but still large enough to maintain an adequate resolution to extract facial features without too much loss. Standardizing the image size ensures uniformity across the dataset, facilitating consistent feature extraction by the neural network.
+
+3. **Normalization**: Normalization is then applied to the resized images to standardize the pixel values between 0 and 255. This step ensures that the input data has a consistent pixel scale, preventing issues such as gradient explosion or vanishing gradients during training.
+
+4. **Grayscale**: Next, the images are converted to black and white, reducing the dimensionality of the input data while preserving essential facial features. Grayscale images contain only intensity information, simplifying the network's computational burden without sacrificing discriminative power.
+
+5. **Equalization**: Finally, histogram equalization is performed to enhance the contrast and brightness of the grayscale images. This technique redistributes pixel intensities to achieve a more uniform histogram, therefore highlighting facial features and improving their visibility.
+
+These preprocessing steps are crucial to perform facial recognition with my CNN. By isolating facial regions, standardizing image sizes, normalizing pixel values, converting to grayscale, and enhancing contrast, the input data is optimized for effective feature extraction and recognition by the neural network.
+
+### Neural Network Architecture:
+
+The neural network architecture I first employed for facial feature extraction consists of several layers tailored to capture intricate facial features efficiently. A Convolutional Neural Network (CNN) serves as the backbone for feature extraction. The CNN comprises five convolutional layers followed by ReLU activation functions, facilitating the extraction of hierarchical features from input images. Max-pooling layers are strategically placed to downsample feature maps, reducing computational complexity and enhancing translation invariance. Batch normalization layers are incorporated to stabilize and accelerate the training process by normalizing the input distributions. Following the convolutional layers, two fully connected layers are utilized for embedding generation, resulting in a feature vector of the desired size. This is essentially the same as the image classification CNN that we built in practical 2 a;fter seeing how well that worked in that scenario I decided to use it as a starting point.
+
+The loss function employed in this architecture is the triplet loss function, specifically designed for training on triplet samples. Triplet loss works by selecting one image as the anchor, one positive example (the same person as the anchor), and one negative example (someone who is not the anchor). Triplet loss attempts to train the neural network in such a way that it learns to pull the anchor image closer to the positive image in the feature space, while pushing it further away from the negative image. Triplet loss ensures that the distance between anchor-positive pairs is minimized while maintaining a margin with anchor-negative pairs in the embedding space. This encourages the network to learn discriminative features for accurate facial recognition.
+
+For optimization, the Adam optimizer is utilized, which efficiently adapts the learning rates for each parameter during training. Additionally, a learning rate scheduler is employed to adjust the learning rate based on the number of epochs, ensuring stable convergence and preventing oscillations during training.
+
+### Achieved Accuracy:
+
+The facial recognition system demonstrated (unusually) exceptionally high accuracy during training, achieving an accuracy rate of approximately 99.95% on the data that it was trained with, with little to no loss (0.0001). However, upon evaluation on the validation set, the accuracy significantly drops, most likely indicating overfitting. This lower validation accuracy, revealed to me the model's inability to generalize to unseen data.
+
+### Observations and Ideas for Improvement:
+
+The discrepancy between training and validation accuracies seems to certainly indicate overfitting. While achieving high accuracy on the training set is indicative of the model's capacity to learn intricate facial features, the inability to generalize to unseen data poses a significant challenge that will require some changes.
+
+To enhance the generalization capabilities of the neural network, I plan to implement several strategies and see how that changes results:
+
+- **Model Complexity Reduction**: Considering the complexity of the 5 layer current neural network architecture, reducing the model's complexity may be beneficial, especially with my limited dataset. Streamlining the architecture by decreasing the number of parameters or layers can prevent overfitting and improve the model's ability to generalize to unseen data.
+
+- **Data Augmentation**: By applying data augmentation techniques on my image sets with transformations like rotations, scaling, and flipping, I can introduce variations without altering labels. This process can force the model to learn more generalized features and become less reliant on specific training instances. By exposing the network to a wider range of scenarios during training, data augmentation improves generalization and broadens coverage of the input space, leading to more robust and reliable models.
+
+- **Regularization**: Using regularization techniques (particularly dropout) can mitigate overfitting by imposing constraints on the model's parameters. Dropout layers can be integrated after the fully connected layers to prevent the network from relying too heavily on specific features, thus promoting more robust feature representations.
+
+- **Hyperparameter Fine Tuning**: Experimenting with different hyperparameters, including learning rate, batch size, and margin value in the triplet loss function, can optimize the model's performance. Fine-tuning these parameters based on observations can lead to improved capabilities and enhanced accuracy on validation data.
+
+In conclusion, while the current facial recognition system demonstrates impressive accuracy during training, addressing the issue of overfitting is key to enhancing its generalization capabilities. By incorporating some or all of the techniques described above, the neural network can be optimized to achieve better performance on both training, validation, and testing datasets.
 
 # Part 4: Final Solution With Results on Unknown Data
 TBD
