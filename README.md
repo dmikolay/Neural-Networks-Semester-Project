@@ -174,7 +174,7 @@ In this testing image, I was incorrectly negatively classified. The camera has a
 | *False Negative Example 1* |
 <br/>
 
-In this testing image, I was also incorrectly negatively classified. The camera has an angle pointing up at my face, and I’m noticeably smiling and looking away from the camera. 
+In this testing image, I was also incorrectly negatively classified. The camera has an angle pointing up at my face, and I’m noticeably smiling and looking away. 
 
 | ![false negative example 2](./data_crop/valid/danny/7.jpg) | 
 |:--:| 
