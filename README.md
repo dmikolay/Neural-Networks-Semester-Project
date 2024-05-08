@@ -178,7 +178,7 @@ In this testing image, I was also incorrectly negatively classified. The camera 
 
 | ![false negative example 2](./data_crop/valid/danny/7.jpg) | 
 |:--:| 
-| *False Negative Example 1* |
+| *False Negative Example 2* |
 <br/>
 
 In this testing image, I was correctly positively classified. The camera has a similar angle to the training data (pointed right at me), and I have minimal expression.
