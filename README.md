@@ -158,20 +158,24 @@ Upon evaluation of the facial recognition system on the test set, disparities in
 
 One way that I believe would have led to better results is altering the training dataset. If I were to have trained the model on a larger dataset with much more faces, each with a plethora of images of their face from all angles, lighting, and emotions, I feel like the testing images would have been classified much more accurately. The images that were not classified were almost always at an unusual angle or had me making a face in them. This also was present when testing with the webcam stream: every time I looked away from the camera, made a noticeable expression, or attempted in an area that was unusually light or dark, I would be incorrectly classified as “not_danny.”
 
-To illustrate these discrepancies take a look at the following images:
+To illustrate these discrepancies take a look at the following images after being processed:
 
 Here is an example in the training data. All the training images were similar, with little change in angle and no change in lighting. I am focused on the camera and it is directly pointed at me.
 
 ![training image example](./data_crop/train/danny/IMG_2493.JPG)
+<br/>
 
 In this testing image, I was incorrectly negatively classified. The camera has an angle pointing down on my face, and my mouth is slightly open.
 
 ![false negative example 1](./data_crop/valid/danny/3.jpg)
+<br/>
 
 In this other testing image, I was also incorrectly negatively classified. The camera has an angle pointing up at my face, and I’m noticeably smiling and looking away from the camera. 
 
 ![false negative example 2](./data_crop/valid/danny/7.jpg)
+<br/>
 
 In this other testing image, I was correctly positively classified. The camera has a similar angle to the training data (pointed right at me), and I have minimal expression.
 
 ![correct positive example](./data_crop/valid/danny/6.jpg)
+<br/>
