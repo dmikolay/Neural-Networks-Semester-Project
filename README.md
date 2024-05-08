@@ -104,7 +104,7 @@ For optimization, the Adam optimizer is utilized, which efficiently adapts the l
 
 ### Achieved Accuracy:
 
-The facial recognition system demonstrated (unusually) exceptionally high accuracy during training, achieving an accuracy rate of approximately 99.95% on the data that it was trained with, with little to no loss (0.0001). However, upon evaluation on the validation set, the accuracy significantly drops, most likely indicating overfitting. This lower validation accuracy, revealed to me the model's inability to generalize to unseen data.
+The facial recognition system demonstrated (unusually) exceptionally high accuracy during training, achieving an accuracy rate of approximately 99.95% on the data that it was trained with, with little to no loss (0.0001). This accuracy was achieved in the first few epochs as well. However, upon evaluation on the validation set, the accuracy significantly drops, most likely indicating overfitting. This lower validation accuracy, revealed to me the model's inability to generalize to unseen data.
 
 ### Observations and Ideas for Improvement:
 
