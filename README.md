@@ -96,9 +96,9 @@ These preprocessing steps are crucial to perform facial recognition with my CNN.
 
 ### Neural Network Architecture:
 
-The neural network architecture I first employed for facial feature extraction consists of several layers tailored to capture intricate facial features efficiently. A Convolutional Neural Network (CNN) serves as the backbone for feature extraction. The CNN comprises five convolutional layers followed by ReLU activation functions, facilitating the extraction of hierarchical features from input images. Max-pooling layers are strategically placed to downsample feature maps, reducing computational complexity and enhancing translation invariance. Batch normalization layers are incorporated to stabilize and accelerate the training process by normalizing the input distributions. Following the convolutional layers, two fully connected layers are utilized for embedding generation, resulting in a feature vector of the desired size. This is essentially the same as the image classification CNN that we built in practical 2 a;fter seeing how well that worked in that scenario I decided to use it as a starting point.
+The neural network architecture I first employed for facial feature extraction consists of several layers tailored to capture intricate facial features efficiently. A Convolutional Neural Network (CNN) serves as the backbone for feature extraction. The CNN comprises five convolutional layers followed by ReLU activation functions (see cnn.py), facilitating the extraction of hierarchical features from input images. Max-pooling layers are strategically placed to downsample feature maps, reducing computational complexity and enhancing translation invariance. Batch normalization layers are incorporated to stabilize and accelerate the training process by normalizing the input distributions. Following the convolutional layers, two fully connected layers are utilized for embedding generation, resulting in a feature vector of the desired size. This is essentially the same as the image classification CNN that we built in practical 2 after seeing how well that worked in that scenario I decided to use it as a starting point.
 
-The loss function employed in this architecture is the triplet loss function, specifically designed for training on triplet samples. Triplet loss works by selecting one image as the anchor, one positive example (the same person as the anchor), and one negative example (someone who is not the anchor). Triplet loss attempts to train the neural network in such a way that it learns to pull the anchor image closer to the positive image in the feature space, while pushing it further away from the negative image. Triplet loss ensures that the distance between anchor-positive pairs is minimized while maintaining a margin with anchor-negative pairs in the embedding space. This encourages the network to learn discriminative features for accurate facial recognition.
+The loss function employed in this architecture is the triplet loss function, specifically designed for training on triplet samples (see triplet.py). Triplet loss works by selecting one image as the anchor, one positive example (the same person as the anchor), and one negative example (someone who is not the anchor). Triplet loss attempts to train the neural network in such a way that it learns to pull the anchor image closer to the positive image in the feature space, while pushing it further away from the negative image. Triplet loss ensures that the distance between anchor-positive pairs is minimized while maintaining a margin with anchor-negative pairs in the embedding space. This encourages the network to learn discriminative features for accurate facial recognition.
 
 For optimization, the Adam optimizer is utilized, which efficiently adapts the learning rates for each parameter during training. Additionally, a learning rate scheduler is employed to adjust the learning rate based on the number of epochs, ensuring stable convergence and preventing oscillations during training.
 
@@ -123,4 +123,51 @@ To enhance the generalization capabilities of the neural network, I plan to impl
 In conclusion, while the current facial recognition system demonstrates impressive accuracy during training, addressing the issue of overfitting is key to enhancing its generalization capabilities. By incorporating some or all of the techniques described above, the neural network can be optimized to achieve better performance on both training, validation, and testing datasets.
 
 # Part 4: Final Solution With Results on Unknown Data
-TBD
+
+### Alterations Made After Initial Solution
+
+In part three, I had discussed several methods to reduce overfitting and allow my CNN to better generalize to unseen data. I attempted to implement three of these changes until I decided on the current configuration:
+
+1. **Model Complexity**: My first attempt at solving the overfitting issue was to reduce the complexity of my model. I ended up reducing it all the way to just two convolutional layers and one fully connected latter at first. While this certainly reduced overfitting, it also drastically reduced actual accuracy. I kept experimenting with other changes and after finding better solutions I later switched back to my original CNN with five convolutional layers and two fully connected.
+
+2. **Regularization**: I added more layers for batch normalization and included a dropout layer in between the two fully connected ones. The batch normalization layers add a bit of noise to the activations, introducing some randomness. The dropout layer randomly selects a fraction of the neurons and sets them to zero during training, preventing the network from relying too heavily on a single set of features. These changes were crucial to the success of my facial recognition program.
+
+3. **Data Augmentation**: I artificially increased the size and diversity of my training dataset by applying a variety of transformations to the existing samples. Specifically, I used a random rotation of the images up to 10 degrees, a random color change (including shifts in brightness, contrast, saturation, and hue), and a random level of distortion. This generates new, more extensive samples that expose the model to more variation, and allow it to generalize better to unseen data.
+
+### Testing Database
+
+I essentially have two separate test databases, with one achieving significantly better performance than the other.
+
+The first database is 10 images of me “in the wild,” or just out in a natural setting with varying angles, backgrounds, lightings, expressions, and more. These photos were just scraped from my camera roll and included in a dataset to be analyzed for facial embeddings and compared to the embeddings obtained for my face by the training model on the training dataset. The comparison was made through a program that used the trained neural network to compute image embeddings and calculate the Euclidean distance between those and the reference images of my face extracted the same way (compare.py).
+
+One important note is that the threshold value was obtained from repeatedly testing on the training dataset to get results with a similar ratio of false positives to false negatives. Admittedly, it was not very scientific as I just kept variables to count when false positives or negatives occurred and calculated the ratio after comparisons. Nonetheless, I did achieve a threshold value that seemed ideal: it was not too strict so that images had to be exact matches, but it still was relatively reliable to detect my face and not others.
+
+For this first database of images of myself in a natural setting, I ended up with a disappointing accuracy of about 55% correct. Using these images of myself were almost just as likely to get a positive result (classified as danny) as any random image of someone else.
+
+My second database achieved much better results. This was done in a program where the user is recorded by the webcam, they press the spacebar whenever they want to take a photo, the photo is then processed and analyzed, and finally classified as “danny” or “not_danny” using calculations with the embeddings computed from the trained network. 
+
+This second form of testing showed my network’s ability to actually recognize my face out of others. When I looked forward into the camera and kept my mouth closed, it correctly recognized me 80-90% of the time. Of course, adding variability in angles, expressions, etc led to a much lower classification accuracy (like in the first testing database). Another interesting observation was that it was about equally as likely to classify others correctly as well. I had several friends test the program and they were relatively consistently classified as “not_danny” (again at about an 80-90% rate). If you’d like to see an example of this, watch the video titled FacialRecognitionVideo.mov in the repository.
+
+### Observations and Reasons for Performance Discrepancies
+
+Upon evaluation of the facial recognition system on the test set, disparities in performance compared to the training and validation subsets are observed. In my programs case, these discrepancies most likely stem from a few factors:
+
+- **Domain Shift:** The test dataset often exhibits subtle variations in data distribution, stemming from differences in image conditions, image quality, and demographic representation compared to the training and validation sets. These domain shifts introduce unseen challenges for the model. For example, it was trained on images taken with an older camera with lower quality. While I did my best to process the images to reduce the challenges caused by this, the difference probably still persists somewhere.
+
+- **Limited Generalization to Unseen Scenarios:** Despite efforts to diversify the training data and incorporate augmentation techniques, the model may struggle to generalize effectively to unseen scenarios present in the test set. Unforeseen variations in facial angles, expressions, and lighting conditions pose challenges for feature extraction and classification capabilities, leading to increased error rates.
+
+One way that I believe would have led to better results is altering the training dataset. If I were to have trained the model on a larger dataset with much more faces, each with a plethora of images of their face from all angles, lighting, and emotions, I feel like the testing images would have been classified much more accurately. The images that were not classified were almost always at an unusual angle or had me making a face in them. This also was present when testing with the webcam stream: every time I looked away from the camera, made a noticeable expression, or attempted in an area that was unusually light or dark, I would be incorrectly classified as “not_danny.”
+
+To illustrate these discrepancies take a look at the following images:
+
+Here is an example in the training data. All the training images were similar, with little change in angle and no change in lighting. I am focused on the camera and it is directly pointed at me.
+![image info](./data_crop/train/danny/IMG_2493.JPG)
+
+In this testing image, I was incorrectly negatively classified. The camera has an angle pointing down on my face, and my mouth is open. 
+![image info](./data_crop/valid/danny/3.jpg)
+
+In this other testing image, I was also incorrectly negatively classified. The camera has an angle pointing up at my face, and I’m smiling. 
+![image info](./data_crop/valid/danny/7.jpg)
+
+In this other testing image, I was correctly positively classified. The camera has a similar angle to the training data (pointed right at me), and I have minimal expression.
+![image info](./data_crop/valid/danny/6.jpg)

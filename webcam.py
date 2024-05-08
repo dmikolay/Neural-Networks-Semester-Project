@@ -46,7 +46,7 @@ def main():
         if img_label == 'danny':
             danny_embeddings[img_path] = img_embedding.detach().cpu().numpy()
 
-    threshold = 2.85
+    threshold = 2.850
 
     # Open webcam
     cap = cv2.VideoCapture(0)
@@ -112,4 +112,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
