@@ -170,12 +170,12 @@ In this testing image, I was incorrectly negatively classified. The camera has a
 ![false negative example 1](./data_crop/valid/danny/3.jpg)
 <br/>
 
-In this other testing image, I was also incorrectly negatively classified. The camera has an angle pointing up at my face, and I’m noticeably smiling and looking away from the camera. 
+In this testing image, I was also incorrectly negatively classified. The camera has an angle pointing up at my face, and I’m noticeably smiling and looking away from the camera. 
 
 ![false negative example 2](./data_crop/valid/danny/7.jpg)
 <br/>
 
-In this other testing image, I was correctly positively classified. The camera has a similar angle to the training data (pointed right at me), and I have minimal expression.
+In this testing image, I was correctly positively classified. The camera has a similar angle to the training data (pointed right at me), and I have minimal expression.
 
 ![correct positive example](./data_crop/valid/danny/6.jpg)
 <br/>
