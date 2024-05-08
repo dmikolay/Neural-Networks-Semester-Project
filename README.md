@@ -128,7 +128,7 @@ In conclusion, while the current facial recognition system demonstrates impressi
 
 In part three, I had discussed several methods to reduce overfitting and allow my CNN to better generalize to unseen data. I attempted to implement three of these changes until I decided on the current configuration:
 
-1. **Model Complexity**: My first attempt at solving the overfitting issue was to reduce the complexity of my model. I ended up reducing it all the way to just two convolutional layers and one fully connected layer at first. While this certainly reduced overfitting, it also drastically reduced actual accuracy. I kept experimenting with other changes and after finding better solutions I later switched back to my original CNN with five convolutional layers and two fully connected.
+1. **Model Complexity**: My first attempt at solving the overfitting issue was to reduce the complexity of my model. I ended up reducing it all the way to just two convolutional layers and one fully connected layer at first. While this certainly reduced overfitting, it also drastically reduced actual accuracy. I kept experimenting with other changes and, after finding better solutions, I later switched back to my original CNN with five convolutional layers and two fully connected.
 
 2. **Regularization**: I added more layers for batch normalization and included a dropout layer in between the two fully connected ones. The batch normalization layers add a bit of noise to the activations, introducing some randomness. The dropout layer randomly selects a fraction of the neurons and sets them to zero during training, preventing the network from relying too heavily on a single set of features. These changes were crucial to the success of my facial recognition program.
 
