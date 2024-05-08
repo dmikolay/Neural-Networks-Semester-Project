@@ -162,24 +162,30 @@ To illustrate these discrepancies take a look at the following images after bein
 
 Here is an example in the training data. All the training images were similar, with little change in angle and no change in lighting. I am focused on the camera and it is directly pointed at me.
 
-![training image example](./data_crop/train/danny/IMG_2493.JPG)
-*Training Image Example*
+| ![training image example](./data_crop/train/danny/IMG_2493.JPG) | 
+|:--:| 
+| *Training Image Example* |
 <br/>
 
 In this testing image, I was incorrectly negatively classified. The camera has an angle pointing down on my face, and my mouth is slightly open.
 
-![false negative example 1](./data_crop/valid/danny/3.jpg)
-*False Negative Example 1*
+| ![false negative example 1](./data_crop/valid/danny/3.jpg) | 
+|:--:| 
+| *False Negative Example 1* |
 <br/>
 
 In this testing image, I was also incorrectly negatively classified. The camera has an angle pointing up at my face, and I’m noticeably smiling and looking away from the camera. 
 
-![false negative example 2](./data_crop/valid/danny/7.jpg)
-*False Negative Example 1*
+| ![false negative example 2](./data_crop/valid/danny/7.jpg) | 
+|:--:| 
+| *False Negative Example 1* |
 <br/>
 
 In this testing image, I was correctly positively classified. The camera has a similar angle to the training data (pointed right at me), and I have minimal expression.
 
-![correct positive example](./data_crop/valid/danny/6.jpg)
-*Correct Positive Example*
+| ![correct positive example](./data_crop/valid/danny/6.jpg) | 
+|:--:| 
+| *Correct Positive Example* |
 <br/>
+
+
